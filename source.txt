@@ -1,0 +1,52 @@
+on alfred_script(q)
+set text_file to (q)
+set fullprojectName to name of (info for text_file)
+set projectName to text 1 thru ((offset of "." in fullprojectName) - 1) of fullprojectName
+set database_text to read text_file
+
+tell application "OmniFocus"
+	tell default document
+		if project projectName exists then
+			set projectName to project projectName
+		else
+			set projectName to make new project with properties {name:projectName}
+		end if
+	end tell
+end tell
+
+--process the file in reverse order to put first item at top of inbox
+repeat with i from (count paragraphs of database_text) to 1 by -1
+	set the_database_record to paragraph i of database_text
+	set text item delimiters to tab
+	set field_list to every text item of the_database_record
+	set strDate to item 1 of field_list
+	set todoDate to date strDate
+	set todoName to item 2 of field_list
+	try
+		set todoNotes to item 3 of field_list
+	on error
+		set todoNotes to ""
+	end try
+	
+	tell application "OmniFocus"
+		tell projectName
+			set newTask to make new task with properties {name:todoName, note:todoNotes, containing project:projectName, due date:todoDate}
+		end tell
+	end tell
+end repeat
+
+tell application "Growl"
+	set the allNotificationsList to ¬
+		{"OmniFocus Import Complete"}
+	set the enabledNotificationsList to ¬
+		{"OmniFocus Import Complete"}
+	register as application ¬
+		"OmniFocus Import Complete" all notifications allNotificationsList ¬
+		default notifications enabledNotificationsList ¬
+		icon of application "Things"
+	notify with name ¬
+		"OmniFocus Import Complete" title ¬
+		"Import Complete" description ¬
+		"Your file has completed importing to OmniFocus" application name "OmniFocus Import Complete"
+end tell
+end alfred_script
