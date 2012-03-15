@@ -24,7 +24,8 @@ This generally works best as an export from Excel.
 
 ## Version History ##
 
-
+### 1.0.1 - 2012-03-15 ###
+- Corrected issue where the Growl notification icon was still set to Things. 
 ### 1.0.0 - 2012-03-14 ###
 
 - Initial Release

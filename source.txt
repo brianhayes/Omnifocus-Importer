@@ -43,7 +43,7 @@ tell application "Growl"
 	register as application ¬
 		"OmniFocus Import Complete" all notifications allNotificationsList ¬
 		default notifications enabledNotificationsList ¬
-		icon of application "Things"
+		icon of application "Omnifocus"
 	notify with name ¬
 		"OmniFocus Import Complete" title ¬
 		"Import Complete" description ¬
