@@ -17,12 +17,16 @@ Notes
 ----------------
 The file format should be as follows with one to-do per row, tab deliminated:
 
-MM-DD-YYYY	To-Do Name	Optional notes for the to-do.
+MM-DD-YYYY	MM-DD-YYYY	To-Do Name	Optional notes for the to-do.
 
 This generally works best as an export from Excel. 
 
 
 ## Version History ##
+
+### 1.0.2 - 2012-03-20 ###
+- Made all dates not requried
+- Added option for start date as first item. Format is now start date	end date	To-Do	Notes
 
 ### 1.0.1 - 2012-03-15 ###
 - Corrected issue where the Growl notification icon was still set to Things. 

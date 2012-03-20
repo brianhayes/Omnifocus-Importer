@@ -19,18 +19,28 @@ repeat with i from (count paragraphs of database_text) to 1 by -1
 	set the_database_record to paragraph i of database_text
 	set text item delimiters to tab
 	set field_list to every text item of the_database_record
-	set strDate to item 1 of field_list
-	set todoDate to date strDate
-	set todoName to item 2 of field_list
 	try
-		set todoNotes to item 3 of field_list
+		set strDateStart to item 1 of field_list
+		set todoDateStart to date strDateStart
+	on error
+		set todoDateStart to ""
+	end try
+	try
+		set strDateEnd to item 2 of field_list
+		set todoDateEnd to date strDateEnd
+	on error
+		set todoDateEnd to ""
+	end try	
+	set todoName to item 3 of field_list
+	try
+		set todoNotes to item 4 of field_list
 	on error
 		set todoNotes to ""
 	end try
 	
 	tell application "OmniFocus"
 		tell projectName
-			set newTask to make new task with properties {name:todoName, note:todoNotes, containing project:projectName, due date:todoDate}
+			set newTask to make new task with properties {name:todoName, note:todoNotes, containing project:projectName, due date:todoDateEnd, start date:todoDateStart}
 		end tell
 	end tell
 end repeat
